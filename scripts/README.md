@@ -55,6 +55,7 @@ docker run -it --rm -p 8899:8888 -v ${PWD}:/app ifco-data-science-env
 Simulation results, including the Poisson distribution plot, are saved in the `.images/` directory. The primary image is:
 
 - **Poisson Distribution**: `.images/poisson_dist.png`
+![Poisson Distribution](.images/poisson_dist.png)
 
 ---
 
@@ -63,9 +64,12 @@ Simulation results, including the Poisson distribution plot, are saved in the `.
 ```
 ├── Dockerfile             # Docker instructions for environment setup
 ├── scripts/               # Python scripts and Jupyter notebooks
-│   └── analysis.ipynb     # Main analysis notebook
+│   └── solution.ipynb     # Main analysis notebook
 ├── .images/               # Directory for output images
 │   └── poisson_dist.png   # Poisson distribution plot
+│   └── estimated_pool_size.png   # Poisson distribution plot
+│   └── survival_function.png   # Poisson distribution plot
+│   └── trip_duration.png   # Poisson distribution plot
 ├── README.md              # Project documentation
 └── requirements.txt       # Python dependencies
 ```
