@@ -55,7 +55,6 @@ docker run -it --rm -p 8899:8888 -v ${PWD}:/app ifco-data-science-env
 Simulation results, including the Poisson distribution plot, are saved in the `.images/` directory. The primary image is:
 
 - **Poisson Distribution**: `.images/poisson_dist.png`
-![Poisson Distribution](.images/poisson_dist.png)
 
 ---
 
@@ -95,6 +94,67 @@ Dependencies are managed via the `requirements.txt` file. These include:
 
 The Dockerfile automatically installs these dependencies when building the image.
 
+---
+
+## **Explanation of solution**
+
+The two questions:
+- Develop a model to estimate the shrinkage rate, i.e. the probability of an asset not returning from a trip
+- Develop a model to estimate the pool size, i.e. the amount of assets available to IFCO at a given time.
+
+Firts, our assumptions and simulated data:
+
+We have the following variables:
+
+```sh
+# given mean trip duration
+mean_trip = 100
+# assumed standard deviation
+std_trip = 20
+# number of trips
+n_trip = 10000
+# % RPC lost
+shrinkage_rate = 0.1 
+```
+
+- `mean_trip`: Is given by the excercise
+- `std_trip`: Is assumed
+- `n_trip`: Number of simulations of assets
+- `shrinkage_rate`: Assumptions, it may defer and change the results.
+
+We use these variables to simualte our data.
+
+We decided to follow the analysis with a poisson distribution to simualted the `trip_duration`. (Also a normal distribution was tried but we have only the mean.)
+
+```sh
+# simulating a trip duration with poisson distribution
+sim_p = np.random.poisson(100,10000)
+
+plt.hist(sim_p, bins=100, alpha=0.6, color='r')
+```
+![Poisson Distribution](.images/poisson_dist.png)
+
+After that we have simulated the rental dates of each asset, starting at 2020-01-01. And also imputing which of the assest are going to be lost.
+
+![Dataframe](.images/df_head.png)
+
+### ***Shrinkage rate**
+
+Now, to answer the first question, we are going to use a survival algorithm to know the probability of an asset to be lost given the trip duration.
+`KaplanMeierFitter()`
+
+![Poisson Distribution](.images/survival_function.png)
+
+Here, we can observe that after 80 days of trip duration the probability of survival is decreasing. And after 100 days the probability is around 50%.
+Finally after 133 days only survives the 10% of the assets.
+
+This is important because the survival probability is the counter part of the shrinkage rate, thus 90% of the assets survives at day 87.
+
+### **Pool size**
+
+To answer the second question we can provide a simulation.
+
+Our assumptions 
 ---
 
 ## **Contact**
