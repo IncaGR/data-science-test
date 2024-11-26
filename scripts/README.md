@@ -143,7 +143,7 @@ After that we have simulated the rental dates of each asset, starting at 2020-01
 Now, to answer the first question, we are going to use a survival algorithm to know the probability of an asset to be lost given the trip duration.
 `KaplanMeierFitter()`
 
-![Poisson Distribution](.images/survival_function.png)
+![Survival Plot](.images/survival_function.png)
 
 Here, we can observe that after 80 days of trip duration the probability of survival is decreasing. And after 100 days the probability is around 50%.
 Finally after 133 days only survives the 10% of the assets.
@@ -154,7 +154,38 @@ This is important because the survival probability is the counter part of the sh
 
 To answer the second question we can provide a simulation.
 
-Our assumptions 
+Our assumptions:
+- We know the day an asset is out.
+- `rental_rate`: Average number of asset rented per day (As we are simulating and we do not have more info. this is our assumption) 
+- `shrinkage_rate`: 0.1 
+
+Variables:
+- `days_to_simulate`: One year
+- `initial_pool_size`: 5000 assets at t=0
+- `available_assets`: Assets at n-day
+
+![Pool size plot](.images/estimated_pool_size.png)
+
+We see that our pool size is quite stable after a few days. This is because:
+
+- We know the rental date of all the assets out. This simplify the process as we know in advance when an assets is going to be used.
+- We are assuming that the rental rate os assets is constant. In a real example, this can vary per seasonal components, routes, distributors, geografical reason.
+
+### **Bonus questions**
+- How are shrinkage rate and pool size related?
+The shrinkage rate and the pool size (incremental) are complementary as the assets 'survived' are part of the pool size at given day. 
+On the other hand, the shrinkage rate are the ones that not survived the process.
+
+- Bonus: How would switching to scenario two change your approach, which limitations would be introduced?
+If we have only th rental date of a percentatge of the assets, we can simulate an extra random number of assets delivered each day.
+This is going to complicate the process as first:
+- Do we have info of the generation distribution of the rental dates?
+- We have to be very carefull of having always stock for new rentals.
+
+To mitigate this:
+- Use statistical imputation techniques or Bayesian methods to estimate unobserved rentals.
+- Incorporate historical trends and seasonal patterns to refine rental rate assumptions.
+
 ---
 
 ## **Contact**
