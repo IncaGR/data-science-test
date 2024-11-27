@@ -188,6 +188,14 @@ To mitigate this:
 
 ---
 
+### Future Work:
+
+- Seasonal components: As we are dealing with simulated data, we cannot infer more variables as seasonality, route, etc
+- Complex models that can enhance prediction power, as Cox Proportional Hazards that allows more variables.
+- Define a metric that can mix business and precision, for example introduce the cost of losing one asset. 
+
+---
+
 ## **Contact**
 
 If you have any questions or feedback, feel free to reach out.
