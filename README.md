@@ -1,3 +1,5 @@
+## Please go to the folder "Geraldo_solution" to review the candidate's solution.
+
 # IFCO Data Science Challenge
 
 <p align="center">
